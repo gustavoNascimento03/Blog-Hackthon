@@ -1,4 +1,3 @@
-// src/pages/Feed.jsx
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { Sidebar } from "../components/Sidebar";
@@ -27,8 +26,8 @@ export function Feed() {
             {/* 1. Sidebar Fixa */}
             <Sidebar />
 
-            {/* 2. Área do Conteúdo (Margem à esquerda igual à largura da sidebar) */}
-            <main className="flex-1 md:ml-64 p-4 md:p-10">
+            {/* 2. Área do Conteúdo: adicionado ml-20 para mobile e md:ml-64 para desktop, com transição suave */}
+            <main className="flex-1 ml-20 md:ml-64 p-4 md:p-10 transition-all duration-300">
                 <div className="max-w-6xl mx-auto">
                     <header className="mb-10">
                         <h1 className="text-3xl font-display font-bold text-slate-900">
@@ -47,7 +46,6 @@ export function Feed() {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {posts.map((post) => (
-                                // Importante: use o post._id do MongoDB como key
                                 <PostCard key={post._id} post={post} />
                             ))}
                         </div>

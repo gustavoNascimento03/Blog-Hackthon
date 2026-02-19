@@ -6,7 +6,7 @@ import api from "../services/api";
 export function InviteUser() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("aluno"); // Padrão: aluno
+    const [role, setRole] = useState("aluno");
     const [message, setMessage] = useState("");
 
     async function handleInvite(e) {
@@ -34,14 +34,17 @@ export function InviteUser() {
     return (
         <div className="flex min-h-screen bg-slate-50">
             <Sidebar />
-            <main className="flex-1 ml-64 p-8">
+
+            <main className="flex-1 ml-16 md:ml-64 p-10 md:p-8 transition-all">
                 <div className="max-w-2xl mx-auto">
-                    <h1 className="text-3xl font-display font-bold text-slate-900 mb-8 flex items-center gap-3">
-                        <UserPlus className="text-primary" />
+                    {/* Título responsivo: menor no mobile (text-2xl) */}
+                    <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-900 mb-6 md:mb-8 flex items-center gap-3">
+                        <UserPlus className="text-primary w-6 h-6 md:w-8 md:h-8" />
                         Convidar Usuário
                     </h1>
 
-                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    {/* Padding interno do card reduzido no mobile (p-5 vs p-8) */}
+                    <div className="bg-white p-5 md:p-8 rounded-2xl shadow-sm border border-gray-100">
                         {message && (
                             <div
                                 className={`p-4 mb-6 rounded-lg text-sm font-medium ${message.includes("✅") ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}
@@ -50,7 +53,10 @@ export function InviteUser() {
                             </div>
                         )}
 
-                        <form onSubmit={handleInvite} className="space-y-6">
+                        <form
+                            onSubmit={handleInvite}
+                            className="space-y-4 md:space-y-6"
+                        >
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Nome Completo
@@ -67,7 +73,7 @@ export function InviteUser() {
                                         onChange={(e) =>
                                             setName(e.target.value)
                                         }
-                                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm md:text-base"
                                         placeholder="Ex: João da Silva"
                                     />
                                 </div>
@@ -89,7 +95,7 @@ export function InviteUser() {
                                         onChange={(e) =>
                                             setEmail(e.target.value)
                                         }
-                                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm md:text-base"
                                         placeholder="Ex: joao@escola.com"
                                     />
                                 </div>
@@ -99,18 +105,18 @@ export function InviteUser() {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Função no Sistema
                                 </label>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-3 md:gap-4">
                                     <button
                                         type="button"
                                         onClick={() => setRole("aluno")}
-                                        className={`p-4 rounded-xl border transition-all text-center ${role === "aluno" ? "border-primary bg-blue-50 text-primary font-bold" : "border-gray-200 hover:bg-gray-50"}`}
+                                        className={`p-3 md:p-4 rounded-xl border transition-all text-center text-sm md:text-base ${role === "aluno" ? "border-primary bg-blue-50 text-primary font-bold" : "border-gray-200 hover:bg-gray-50"}`}
                                     >
                                         Aluno
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setRole("professor")}
-                                        className={`p-4 rounded-xl border transition-all text-center ${role === "professor" ? "border-primary bg-blue-50 text-primary font-bold" : "border-gray-200 hover:bg-gray-50"}`}
+                                        className={`p-3 md:p-4 rounded-xl border transition-all text-center text-sm md:text-base ${role === "professor" ? "border-primary bg-blue-50 text-primary font-bold" : "border-gray-200 hover:bg-gray-50"}`}
                                     >
                                         Professor
                                     </button>
@@ -119,7 +125,7 @@ export function InviteUser() {
 
                             <button
                                 type="submit"
-                                className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all flex justify-center items-center gap-2"
+                                className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 md:py-4 rounded-xl transition-all flex justify-center items-center gap-2 text-sm md:text-base shadow-lg shadow-blue-500/20 active:scale-[0.98]"
                             >
                                 <UserPlus size={20} />
                                 Cadastrar Usuário

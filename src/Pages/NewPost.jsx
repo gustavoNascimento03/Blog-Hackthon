@@ -1,8 +1,8 @@
-import { useState } from "react"; // Adicionado
+import { useState } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api"; // Certifique-se de que o caminho está correto
+import api from "../services/api";
 
 export function NewPost() {
     const navigate = useNavigate();
@@ -18,7 +18,6 @@ export function NewPost() {
         setLoading(true);
 
         try {
-            // Envia para a rota de criação definida no seu routes.js
             await api.post("/posts", {
                 title,
                 category,
@@ -41,22 +40,27 @@ export function NewPost() {
         <div className="min-h-screen bg-background-light">
             <Sidebar />
 
-            <main className="ml-64 p-8">
+            <main className="ml-16 md:ml-64 p-10 sm:p-6 md:p-8 transition-all">
                 <div className="max-w-2xl mx-auto">
                     <button
                         onClick={() => navigate("/feed")}
-                        className="flex items-center gap-2 text-gray-500 hover:text-primary mb-6 transition-colors"
+                        className="flex items-center gap-2 text-gray-500 hover:text-primary mb-4 md:mb-6 transition-colors"
                     >
                         <ArrowLeft size={20} />
-                        Voltar para o Feed
+                        <span className="text-sm md:text-base">
+                            Voltar para o Feed
+                        </span>
                     </button>
 
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-                        <h1 className="text-2xl font-bold text-gray-800 font-display mb-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 md:p-8">
+                        <h1 className="text-xl md:text-2xl font-bold text-gray-800 font-display mb-4 md:mb-6">
                             Criar nova publicação
                         </h1>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="space-y-4 md:space-y-6"
+                        >
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-700 font-body">
                                     Título da postagem
@@ -67,7 +71,7 @@ export function NewPost() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="Ex: Dicas para a prova de amanhã..."
-                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body text-sm md:text-base"
                                 />
                             </div>
 
@@ -81,7 +85,7 @@ export function NewPost() {
                                     onChange={(e) =>
                                         setCategory(e.target.value)
                                     }
-                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body bg-white"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body bg-white text-sm md:text-base"
                                 >
                                     <option value="">
                                         Selecione um tópico...
@@ -105,15 +109,15 @@ export function NewPost() {
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder="Escreva sua mensagem aqui..."
-                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body resize-none"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body resize-none text-sm md:text-base"
                                 />
                             </div>
 
-                            <div className="pt-4 flex justify-end">
+                            <div className="pt-2 md:pt-4 flex justify-end">
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="bg-primary hover:bg-blue-600 disabled:bg-gray-400 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] font-display shadow-lg shadow-blue-500/30"
+                                    className="w-full sm:w-auto bg-primary hover:bg-blue-600 disabled:bg-gray-400 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] font-display shadow-lg shadow-blue-500/30 text-center text-sm md:text-base"
                                 >
                                     {loading ? "Publicando..." : "Publicar"}
                                 </button>

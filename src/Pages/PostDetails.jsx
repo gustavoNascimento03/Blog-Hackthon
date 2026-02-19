@@ -5,17 +5,15 @@ import { ArrowLeft, Trash2, Edit } from "lucide-react";
 import api from "../services/api";
 
 export function PostDetails() {
-    const { id } = useParams(); // Pega o ID da URL
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Verifica se é professor (Lógica que já usamos na Sidebar)
     const userRole = localStorage.getItem("userRole");
     const isProfessor = userRole === "professor";
 
-    // Busca os dados do post
     useEffect(() => {
         async function loadPost() {
             try {
@@ -33,14 +31,12 @@ export function PostDetails() {
     }, [id, navigate]);
 
     useEffect(() => {
-        // Função para registrar a leitura
         async function registerReading() {
             try {
                 const userRole = localStorage.getItem("userRole");
                 if (userRole === "aluno") {
                     const response = await api.post(`/score/read/${id}`);
                     if (response.data.msg.includes("ganhou")) {
-                        // Opcional: Mostrar um brinde ou toast de sucesso
                         console.log(response.data.msg);
                     }
                 }
@@ -54,7 +50,6 @@ export function PostDetails() {
         }
     }, [id, post]);
 
-    // Função para deletar
     async function handleDelete() {
         const confirm = window.confirm(
             "Tem certeza que deseja excluir este post?",
@@ -93,24 +88,25 @@ export function PostDetails() {
         <div className="min-h-screen bg-slate-50">
             <Sidebar />
 
-            <main className="ml-64 p-8">
+            <main className="ml-16 md:ml-64 p-10 md:p-8 transition-all duration-300">
                 <div className="max-w-3xl mx-auto">
-                    {/* Botão Voltar */}
                     <button
                         onClick={() => navigate("/feed")}
-                        className="flex items-center gap-2 text-gray-500 hover:text-primary mb-6 transition-colors"
+                        className="flex items-center gap-2 text-gray-500 hover:text-primary mb-4 md:mb-6 transition-colors"
                     >
                         <ArrowLeft size={20} />
-                        Voltar para o Feed
+                        <span className="text-sm md:text-base">
+                            Voltar para o Feed
+                        </span>
                     </button>
 
                     {post && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                            {/* Cabeçalho do Post */}
-                            <div className="p-8 border-b border-gray-100">
-                                <div className="flex justify-between items-start mb-4">
+                            {/* Header do Post: Padding reduzido no mobile (p-5) */}
+                            <div className="p-5 md:p-8 border-b border-gray-100">
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
                                     <span
-                                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${categoryColors[post.category] || "bg-gray-100"}`}
+                                        className={`self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${categoryColors[post.category] || "bg-gray-100"}`}
                                     >
                                         {post.category}
                                     </span>
@@ -121,7 +117,8 @@ export function PostDetails() {
                                     </span>
                                 </div>
 
-                                <h1 className="text-3xl font-bold text-gray-900 mb-2 font-display">
+                                {/* Título responsivo (menor no mobile) */}
+                                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-display break-words">
                                     {post.title}
                                 </h1>
 
@@ -133,19 +130,18 @@ export function PostDetails() {
                                 </p>
                             </div>
 
-                            {/* Conteúdo Completo */}
-                            <div className="p-8">
-                                <div className="prose max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap">
+                            {/* Conteúdo: Padding reduzido no mobile (p-5) */}
+                            <div className="p-5 md:p-8">
+                                <div className="prose max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
                                     {post.content}
                                 </div>
                             </div>
 
-                            {/* Área de Ações (SÓ PARA PROFESSORES) */}
                             {isProfessor && (
-                                <div className="bg-gray-50 p-6 flex justify-end gap-4 border-t border-gray-100">
+                                <div className="bg-gray-50 p-4 md:p-6 flex justify-end gap-3 md:gap-4 border-t border-gray-100">
                                     <button
                                         onClick={handleEdit}
-                                        className="flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg font-medium transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2 md:px-4 text-sm md:text-base text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg font-medium transition-colors"
                                     >
                                         <Edit size={18} />
                                         Editar
@@ -153,7 +149,7 @@ export function PostDetails() {
 
                                     <button
                                         onClick={handleDelete}
-                                        className="flex items-center gap-2 px-4 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg font-medium transition-colors"
+                                        className="flex items-center gap-2 px-3 py-2 md:px-4 text-sm md:text-base text-red-600 bg-red-50 hover:bg-red-100 rounded-lg font-medium transition-colors"
                                     >
                                         <Trash2 size={18} />
                                         Excluir
