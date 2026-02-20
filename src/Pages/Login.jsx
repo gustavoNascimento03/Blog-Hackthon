@@ -162,7 +162,8 @@ export function Login() {
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center text-sm text-gray-500 font-body">
+                    {/* Att futura, email de recuperação */}
+                    {/* <div className="mt-6 text-center text-sm text-gray-500 font-body">
                         Esqueceu sua senha?{" "}
                         <a
                             href="#"
@@ -170,7 +171,7 @@ export function Login() {
                         >
                             Recuperar acesso
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
